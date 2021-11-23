@@ -7,15 +7,26 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends AbstractPage {
 
     // Обычный поиск элемента
-    private WebElement user = driver.findElement(By.id(""));
+    private WebElement user = driver.findElement(By.id("username"));
 
-    // Поиск элемента через аннотацию
-    @FindBy(id = "")
+     //Поиск элемента через аннотацию
+    @FindBy(id = "password")
     private WebElement password;
+//    private WebElement password = driver.findElement(By.id("password"));
 
-    // todo: остальные элементы страницы
+    // Поиск элемента через xpath
+    private WebElement rememberPassword
+            = driver.findElement(By.xpath
+            ("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/div[3]/div/label/input"));
+
+    private WebElement login
+            = driver.findElement(By.xpath
+            ("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/input[1]"));
 
     public void login(String user, String password) {
-        // todo
+        this.user.sendKeys(user);
+        this.password.sendKeys(password);
+        rememberPassword.click();
+        login.click();
     }
 }
