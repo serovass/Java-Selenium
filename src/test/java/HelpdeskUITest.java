@@ -44,7 +44,7 @@ public class HelpdeskUITest {
         element.click();
         //Summary of the problem
         element = driver.findElement(By.xpath("//*[@id=\"id_title\"]"));
-        element.sendKeys("Big problem");
+        element.sendKeys("ui-test");
         //Description of your issue
         element = driver.findElement(By.xpath("//*[@id=\"id_body\"]"));
         element.sendKeys("No comments");
@@ -65,10 +65,10 @@ public class HelpdeskUITest {
 
         //Log in
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
-        LoginPage loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
 
 //        Закрываем текущее окно браузера
-        driver.close();
+        //driver.close();
     }
 }
