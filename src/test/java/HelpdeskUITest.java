@@ -54,6 +54,7 @@ public class HelpdeskUITest {
         driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/thead/tr/th[4]")).click();
         driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/tbody/tr[1]/td[2]/div")).click();
 
+
         //сравниваем информацию в Ticket
         pages.TicketPage ticketPage = new TicketPage();
         Assert.assertEquals(ticketPage.getEMailAddress(), System.getProperty("eMailAddress"));
