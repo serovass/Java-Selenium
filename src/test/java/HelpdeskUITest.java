@@ -1,13 +1,11 @@
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.AbstractPage;
-import pages.LoginPage;
-import pages.TicketsPage;
+import pages.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -35,18 +33,35 @@ public class HelpdeskUITest {
     public void createTicketTest() {
         driver.get(System.getProperty("site.url"));
 
-//        //Создание New Ticket
+        //Создаем New Ticket
         WebElement newTicket = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/ul/li[2]/a"));
         newTicket.click();
-        TicketsPage ticketsPage = new TicketsPage();
-        ticketsPage.newTicket("ui-test", "No comments", "email@gmail.com");
+        CreatingTicketsPage creatingTicket = new CreatingTicketsPage();
+        creatingTicket.newTicket
+                (System.getProperty("summary"),
+                System.getProperty("issueDescription"),
+                System.getProperty("eMailAddress"));
 
-        //Log in
+        //Логинимся
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
 
-//      //Закрываем текущее окно браузера
+        //находим и открываем созданный Ticket
+        driver.findElement(By.xpath("//*[@id=\"search_query\"]")).sendKeys(System.getProperty("summary"));
+        driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/thead/tr/th[4]")).click();
+        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/thead/tr/th[4]")).click();
+        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/tbody/tr[1]/td[2]/div")).click();
+
+        //сравниваем информацию в Ticket
+        pages.TicketPage ticketPage = new TicketPage();
+        Assert.assertEquals(ticketPage.getEMailAddress(), System.getProperty("eMailAddress"));
+        Assert.assertEquals(ticketPage.getIssueDescription(), System.getProperty("issueDescription"));
+        Assert.assertTrue(ticketPage.getSummaryQueue().contains(System.getProperty("queue")));
+        Assert.assertTrue(ticketPage.getSummaryQueue().contains(System.getProperty("summary")));
+
+      //Закрываем текущее окно браузера
         driver.close();
     }
 }
