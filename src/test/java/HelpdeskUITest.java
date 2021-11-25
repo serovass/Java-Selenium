@@ -36,11 +36,14 @@ public class HelpdeskUITest {
         //Создаем New Ticket
         WebElement newTicket = driver.findElement(By.xpath("//*[@id=\"wrapper\"]/ul/li[2]/a"));
         newTicket.click();
-        CreatingTicketsPage creatingTicket = new CreatingTicketsPage();
-        creatingTicket.newTicket
+        TicketsPageCreate creatingTicket = new TicketsPageCreate();
+        //Получаем заголовок Ticket
+        String ticketHead = creatingTicket.newTicket
                 (System.getProperty("summary"),
                 System.getProperty("issueDescription"),
                 System.getProperty("eMailAddress"));
+        //Выделяем порядковый номер Ticket
+        String ticketId = ticketHead.substring(ticketHead.indexOf("-")+1,ticketHead.indexOf("]"));
 
         //Логинимся
         driver.findElement(By.xpath("//*[@id=\"userDropdown\"]")).click();
@@ -48,12 +51,8 @@ public class HelpdeskUITest {
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
 
         //находим и открываем созданный Ticket
-        driver.findElement(By.xpath("//*[@id=\"search_query\"]")).sendKeys(System.getProperty("summary"));
-        driver.findElement(By.xpath("//*[@id=\"searchform\"]/div/div/button")).click();
-        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/thead/tr/th[4]")).click();
-        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/thead/tr/th[4]")).click();
-        driver.findElement(By.xpath("//*[@id=\"ticketTable\"]/tbody/tr[1]/td[2]/div")).click();
-
+        TicketPageSearch ticketSearch = new TicketPageSearch();
+        ticketSearch.OpenTicketPage(System.getProperty("summary"), ticketId);
 
         //сравниваем информацию в Ticket
         pages.TicketPage ticketPage = new TicketPage();

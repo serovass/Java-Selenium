@@ -3,7 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
-public class CreatingTicketsPage extends AbstractPage {
+public class TicketsPageCreate extends AbstractPage {
 
     private final WebElement queue
             = driver.findElement(By.xpath("//*[@id=\"id_queue\"]"));
@@ -18,12 +18,13 @@ public class CreatingTicketsPage extends AbstractPage {
     private final WebElement submitTicket
             = driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/button"));
 
-    public void newTicket(String summary, String issueDescription, String eMailAddress) {
+    public String newTicket(String summary, String issueDescription, String eMailAddress) {
         queue.click();
         queueElem.click();//Queue: Django Helpdesk
         this.summary.sendKeys(summary);
         this.issueDescription.sendKeys(issueDescription);
         this.eMailAddress.sendKeys(eMailAddress);
         submitTicket.click();
+        return driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/table/caption")).getText();
     }
 }
