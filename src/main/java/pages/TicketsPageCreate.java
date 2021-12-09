@@ -1,4 +1,5 @@
 package pages;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,6 +19,7 @@ public class TicketsPageCreate extends AbstractPage {
     private final WebElement submitTicket
             = driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/button"));
 
+    @Step("123")
     public String newTicket(String summary, String issueDescription, String eMailAddress) {
         queue.click();
         queueElem.click();//Queue: Django Helpdesk

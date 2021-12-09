@@ -10,7 +10,8 @@ public class LoginPage extends AbstractPage {
 
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver; }
+//        this.driver = driver;
+    }
 
     //Поиск элемента через аннотацию
     @FindBy(id = "username")
