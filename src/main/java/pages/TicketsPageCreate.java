@@ -19,7 +19,7 @@ public class TicketsPageCreate extends AbstractPage {
     private final WebElement submitTicket
             = driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/div/div/div[2]/form/button"));
 
-    @Step("123")
+    @Step ("newTicket")
     public String newTicket(String summary, String issueDescription, String eMailAddress) {
         queue.click();
         queueElem.click();//Queue: Django Helpdesk
@@ -27,6 +27,8 @@ public class TicketsPageCreate extends AbstractPage {
         this.issueDescription.sendKeys(issueDescription);
         this.eMailAddress.sendKeys(eMailAddress);
         submitTicket.click();
+        makeScreenshotOnFailure("newTicket");
+
         return driver.findElement(By.xpath("//*[@id=\"content-wrapper\"]/div/table/caption")).getText();
     }
 }
