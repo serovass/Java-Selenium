@@ -7,50 +7,6 @@
     <groupId>org.example</groupId>
     <artifactId>HelpdeskUITest</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <properties>
-
-        <!-- Encoding project -->
-        <encoding.type>UTF-8</encoding.type>
-        <project.build.sourceEncoding>${encoding.type}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${encoding.type}</project.reporting.outputEncoding>
-        <file.encoding>${encoding.type}</file.encoding>
-
-        <!-- JDK version project -->
-        <java.version>11</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
-        <selenium-java.version>4.1.0</selenium-java.version>
-        <junit.version>4.13.2</junit.version>
-        <allure-junit4.version>2.16.1</allure-junit4.version>
-        <aspectj.version>1.9.5</aspectj.version>
-
-    </properties>
-
-    <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit4 -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit4</artifactId>
-            <version>${allure-junit4.version}</version>
-        </dependency>
-
-    </dependencies>
 
     <build>
         <plugins>
@@ -60,9 +16,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${encoding.type}</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
 
@@ -71,14 +26,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <argLine>
-                        -Xmx1024m
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        -Dfile.encoding=${encoding.type}
                     </argLine>
                     <properties>
                         <property>
@@ -91,7 +41,6 @@
                     </systemPropertyVariables>
                 </configuration>
                 <dependencies>
-                    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
@@ -109,22 +58,42 @@
                     <resultsDirectory>${project.build.directory}/reports/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/reports/allure-reports</reportDirectory>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>allure-plugin</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
-            </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit4</artifactId>
+            <version>${allure-junit4.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <selenium-java.version>4.1.0</selenium-java.version>
+        <junit.version>4.13.2</junit.version>
+        <allure-junit4.version>2.16.1</allure-junit4.version>
+        <aspectj.version>1.9.5</aspectj.version>
+    </properties>
 </project>
