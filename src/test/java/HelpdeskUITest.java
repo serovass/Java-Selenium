@@ -1,4 +1,5 @@
 //import io.qameta.allure.Step;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -6,9 +7,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.chrome.ChromeOptions;
 import pages.*;
 
+import javax.security.auth.login.Configuration;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class HelpdeskUITest {
@@ -21,11 +26,14 @@ public class HelpdeskUITest {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("config.properties"));
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("user.properties"));
         // Создание экземпляра драйвера
-        driver = new ChromeDriver();
-        // Устанавливаем размер окна браузера, как максимально возможный
-        driver.manage().window().maximize();
+        WebDriverManager.chromedriver().driverVersion("96.0.4664.45").setup();
+        ChromeOptions option = new ChromeOptions();
         // Установим время ожидания для поиска элементов
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        option.setImplicitWaitTimeout(Duration.ofSeconds(10));
+
+        driver = new ChromeDriver(option);
+        //Устанавливаем размер окна браузера, как максимально возможный
+        driver.manage().window().maximize();
         // Установить созданный драйвер для поиска в веб-страницах
         AbstractPage.setDriver(driver);
     }
@@ -64,5 +72,6 @@ public class HelpdeskUITest {
 
       //Закрываем текущее окно браузера
         driver.close();
+        driver.quit();
     }
 }
